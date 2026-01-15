@@ -1,0 +1,266 @@
+<Ui
+	xmlns="http://www.blizzard.com/wow/ui/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ../FrameXML/ui.xsd">
+
+	<!-- Login Screen Logic -->
+	<Script file="AccountLogin.lua"/>
+
+	<Frame name="AccountLoginBackdropTemplate" virtual="true">
+		<Attributes>
+			<Attribute name="layoutType" type="string" value="TooltipMixedLayout"/>
+		</Attributes>
+		<Scripts>
+			<OnLoad>
+				C_NineSlice.OnLoad(self)
+			</OnLoad>
+		</Scripts>
+	</Frame>
+
+	<!-- Main Login Frame -->
+	<Frame name="AccountLogin" toplevel="true" parent="GlueParent" setAllPoints="true" enableKeyboard="true" hidden="true">
+		<Layers>
+			<Layer level="BACKGROUND">
+				<!-- BLP animation background -->
+				<Texture name="AccountLoginBackground"/>
+			</Layer>
+
+			<Layer level="OVERLAY">
+				<Texture parentKey="TopBackgroundOverlay" alpha="0.7" alphaMode="BLEND">
+					<Size y="451" />
+					<Anchors>
+						<Anchor point="TOPLEFT"/>
+						<Anchor point="TOPRIGHT"/>
+					</Anchors>
+				</Texture>
+
+				<Texture parentKey="BottomBackgroundOverlay" alpha="0.7" alphaMode="BLEND">
+					<Size y="577" />
+					<Anchors>
+						<Anchor point="BOTTOMLEFT"/>
+						<Anchor point="BOTTOMRIGHT"/>
+					</Anchors>
+				</Texture>
+
+				<Texture parentKey="LeftBackgroundOverlay" alpha="0.7" alphaMode="BLEND">
+					<Size x="89" />
+					<Anchors>
+						<Anchor point="TOPLEFT"/>
+						<Anchor point="BOTTOMLEFT"/>
+					</Anchors>
+				</Texture>
+			</Layer>
+		</Layers>
+
+		<Frames>
+			<Frame name="$parentUI" parentKey="UI" setAllPoints="true">
+				<Size x="350" y="450"/>
+
+				<Anchors>
+					<Anchor point="RIGHT" relativePoint="CENTER" x="-100" y="0"/>
+				</Anchors>
+
+				<Layers>
+					<Layer level="BACKGROUND">
+						<Texture name="$parentControlBackground" parentKey="ControlBackground">
+							<Size x="300" y="450"/>
+							<Anchors>
+								<Anchor point="RIGHT" x="-175" y="0"/>
+							</Anchors>
+						</Texture>
+					</Layer>
+
+					<Layer level="ARTWORK">
+						<Texture name="$parentLogo" file="Interface\Glues\Common\Glues-WoW-WotLKLogo">
+							<Size>
+								<AbsDimension x="256" y="128"/>
+							</Size>
+
+							<Anchors>
+								<Anchor point="TOP">
+									<Offset>
+										<AbsDimension x="-147" y="20"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</Texture>
+					</Layer>
+				</Layers>
+
+				<Frames>
+					<!-- Account Name Input Field -->
+					<EditBox name="$parentAccountEditBox" parentKey="AccountEditBox" autoFocus="false" letters="320" inherits="AccountLoginBackdropTemplate">
+						<Size x="200" y="40"/>
+						<Anchors>
+							<Anchor point="CENTER" x="-150" y="60"/>
+						</Anchors>
+
+						<Layers>
+							<Layer level="BACKGROUND">
+								<FontString parentKey="Label" inherits="GlueFontNormalSmall" justifyH="LEFT" text="ACCOUNT_NAME">
+									<Size x="610" y="64"/>
+
+									<Anchors>
+										<Anchor point="BOTTOM" relativePoint="TOP" x="210" y="-23"/>
+									</Anchors>
+								</FontString>
+
+								<FontString parentKey="Fill" inherits="OptionsFontHighlightSmallLeft" justifyH="RIGHT" text="LOGIN_ENTER_NAME">
+									<Anchors>
+										<Anchor point="CENTER" relativePoint="CENTER" x="0" y="3"/>
+									</Anchors>
+									<Color r="0.5" g="0.5" b="0.5"/>
+								</FontString>
+							</Layer>
+						</Layers>
+
+						<Scripts>
+							<OnTabPressed function="AccountLogin_FocusPassword"/>
+							<OnEscapePressed function="AccountLogin_OnEscapePressed"/>
+							<OnEnterPressed function="AccountLogin_OnEnterPressed"/>
+							<OnEditFocusLost function="AccountLogin_OnEditFocusLost"/>
+							<OnEditFocusGained function="AccountLogin_OnEditFocusGained"/>
+							<OnTextChanged function="AccountLogin_OnTextChanged"/>
+						</Scripts>
+
+						<FontString inherits="GlueEditBoxFont"/>
+
+						<TextInsets>
+							<AbsInset left="12" right="5" bottom="5"/>
+						</TextInsets>
+					</EditBox>
+
+					<!--Password Input Field -->
+					<EditBox name="$parentPasswordEditBox" parentKey="PasswordEditBox" password="true" autoFocus="false" letters="320" inherits="AccountLoginBackdropTemplate">
+						<Size x="200" y="42"/>
+
+						<Anchors>
+							<Anchor point="CENTER" relativeTo="$parentAccountEditBox" x="0" y="-70"/>
+						</Anchors>
+
+						<Layers>
+							<Layer level="BACKGROUND">
+								<FontString parentKey="Label" inherits="GlueFontNormalSmall" justifyH="LEFT" text="PASSWORD">
+									<Size x="610" y="64"/>
+
+									<Anchors>
+										<Anchor point="BOTTOM" relativePoint="TOP" x="210" y="-23"/>
+									</Anchors>
+								</FontString>
+
+								<FontString parentKey="Fill" inherits="OptionsFontHighlightSmallLeft" justifyH="LEFT" justifyV="MIDDLE" text="LOGIN_ENTER_PASSWORD">
+									<Anchors>
+										<Anchor point="CENTER" relativePoint="CENTER" x="0" y="3"/>
+									</Anchors>
+									<Color r="0.5" g="0.5" b="0.5"/>
+								</FontString>
+							</Layer>
+						</Layers>
+
+						<Scripts>
+							<OnTabPressed function="AccountLogin_FocusAccount"/>
+							<OnEscapePressed function="AccountLogin_OnEscapePressed"/>
+							<OnEnterPressed function="AccountLogin_OnEnterPressed"/>
+							<OnEditFocusLost function="AccountLogin_OnEditFocusLost"/>
+							<OnEditFocusGained function="AccountLogin_OnEditFocusGained"/>
+							<OnTextChanged function="AccountLogin_OnTextChanged"/>
+						</Scripts>
+
+						<FontString inherits="GlueEditBoxFont"/>
+
+						<TextInsets>
+							<AbsInset left="12" right="5" bottom="5"/>
+						</TextInsets>
+					</EditBox>
+
+					<CheckButton name="$parentSaveAccountNameCheckButton" parentKey="SaveAccountNameCheckButton">
+						<Size x="16" y="15"/>
+
+						<Anchors>
+							<Anchor point="CENTER" relativeTo="$parentPasswordEditBox" x="-82" y="-35"/>
+						</Anchors>
+
+						<Layers>
+							<Layer>
+								<FontString parentKey="Label" inherits="GlueFontNormalExtraSmall" justifyH="LEFT" text="SAVE_ACCOUNT_NAME">
+									<Size y="32"/>
+
+									<Anchors>
+										<Anchor point="LEFT" x="20" y="0"/>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+
+						<Scripts>
+							<OnLoad>
+								SetAtlas(self.Normal, "checkbox-minimal", false)
+								SetAtlas(self.Checked, "common-icon-checkmark-yellow", false)
+							</OnLoad>
+						</Scripts>
+
+						<NormalTexture name="$parentNormal" parentKey="Normal"/>
+						<CheckedTexture name="$parentChecked" parentKey="Checked"/>
+					</CheckButton>
+
+					<!-- Login Button -->
+					<Button name="$parentLoginButton" inherits="GlueButtonTemplateBlue" text="LOGIN">
+						<Size x="220" y="45"/>
+
+						<Anchors>
+							<Anchor point="CENTER" x="83" y="-40" relativeTo="$parentSaveAccountNameCheckButton"/>
+						</Anchors>
+
+						<Scripts>
+							<OnClick function="AccountLogin_OnEnterPressed"/>
+						</Scripts>
+					</Button>
+
+					<!-- Quit Button -->
+					<Button name="AccountLoginQuitButton" inherits="GlueButtonTemplateBlue" text="QUIT">
+						<Size x="120" y="35"/>
+
+						<Anchors>
+							<Anchor point="BOTTOMRIGHT" relativeTo="$parentLoginButton" x="20" y="-40"/>
+						</Anchors>
+
+						<Scripts>
+							<OnClick function="AccountLogin_Exit"/>
+						</Scripts>
+					</Button>
+
+					<!-- Options Button -->
+					<Button name="AccountLoginOptionsButton" inherits="GlueButtonTemplateBlue" text="OPTIONS">
+						<Size x="120" y="35"/>
+
+						<Anchors>
+							<Anchor point="RIGHT" x="-5" y="0" relativeTo="AccountLoginQuitButton" relativePoint="LEFT"/>
+						</Anchors>
+
+						<Scripts>
+							<OnClick>
+								PlaySound("gsTitleOptions");
+								OptionsSelectFrame:Show();
+							</OnClick>
+						</Scripts>
+					</Button>
+				</Frames>
+
+				<Scripts>
+					<OnLoad>
+						SetAtlas(self.ControlBackground, "runecarving-background-smoke", false);
+					</OnLoad>
+				</Scripts>
+			</Frame>
+		</Frames>
+
+		<!-- Frame Event Handlers -->
+		<Scripts>
+			<OnLoad 	function="AccountLogin_OnLoad"/>
+			<OnShow 	function="AccountLogin_OnShow"/>
+			<OnHide 	function="AccountLogin_OnHide"/>
+			<OnKeyDown 	function="AccountLogin_OnKeyDown"/>
+			<OnEvent 	function="AccountLogin_OnEvent"/>
+		</Scripts>
+	</Frame>
+</Ui>
